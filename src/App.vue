@@ -1,17 +1,29 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Monthly Budget</h1>
+    <Expenses v-for="item in references.references" :key="item.id" :reference="item"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+  import Expenses from './components/Expenses.vue'
+  import ReferenceService from "@/service/ReferenceService";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Expenses
+  },
+  data: () => ({
+    references: []
+  }),
+  methods: {
+    async getReferences() {
+      this.references = await ReferenceService.getReferencesById()
+    }
+  },
+  mounted() {
+    this.getReferences()
   }
 }
 </script>
@@ -23,6 +35,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 24px;
+}
+
+h1 {
+  margin: 0;
 }
 </style>
