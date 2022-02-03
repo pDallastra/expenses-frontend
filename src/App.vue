@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h1>Monthly Budget</h1>
-    <Expenses v-for="item in references.references" :key="item.id" :reference="item"/>
+    <Expenses v-for="item in references" :key="item.id" :reference="item"/>
   </div>
 </template>
 
@@ -19,7 +19,8 @@ export default {
   }),
   methods: {
     async getReferences() {
-      this.references = await ReferenceService.getReferencesById()
+      const references = await ReferenceService.getReferencesById()
+      this.references = references.references
     }
   },
   mounted() {
