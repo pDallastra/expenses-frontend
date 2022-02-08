@@ -3,8 +3,10 @@ import axios from 'axios'
 
 let path = `${ConfigClass.getUrlApi()}`
 
-export default class ExpensesService {
-    static async getExpensesByReferenceId(referenceId) {
-        return axios.getAll(`${path}/categories/${referenceId}`).then(response => response.data)
+export default class CategoriesService {
+    static async getCategoriesList() {
+        return axios.get(`${path}/categories`).then(response => {
+            return response.data.categories
+        })
     }
 }
