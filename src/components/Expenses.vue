@@ -7,10 +7,10 @@
       @newExpense="checkNewExpense(newExpense)"
     />
     
-    <Table 
+    <Table
       class="expense" 
       v-show="expenses.length" 
-      :expenses="expenses" 
+      :expenses="getExpenses"
       @setDisplayForm="setDisplayForm"
     />
   </div>
@@ -18,11 +18,9 @@
 
 <script>
 import dayjs from 'dayjs'
-
-import ExpensesService from "@/service/ExpensesService";
-
 import Table from './Table.vue'
 import Form from './Form.vue'
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: 'Expenses',
@@ -33,35 +31,30 @@ export default {
   },
   data() {
     return {
-      expenses: [],
-      displayForm: true
+      displayForm: false
     }
   },
 
+  computed: {
+    ...mapGetters(['getExpenses'])
+  },
+
   methods: {
+    ...mapActions(['initExpenses', 'createNewExpense']),
     async checkNewExpense(newExpense) {
-      this.expenses.push(newExpense)
-      this.sortExpenses()
-      this.setDisplayForm()
+      await this.createNewExpense(newExpense)
     },
 
     formatDate(date, string) {
       return dayjs(date).format(string)
     },
 
-    sortExpenses() {
-      this.expenses = this.expenses.sort((a, b) => new Date(a.date) - new Date(b.date))
-    },
-
     setDisplayForm() {
       this.displayForm = !this.displayForm
     },
   },
-  async mounted() {
-    await ExpensesService.getExpensesByReferenceId(this.reference.id).then((response) => {
-      this.expenses = response
-      this.sortExpenses()
-    })
+  mounted() {
+    !this.getExpenses.length && this.initExpenses(this.reference.id);
   }
 }
 </script>
@@ -75,63 +68,14 @@ export default {
 }
 
 h2 {
-  margin-bottom: 0;
+  margin-bottom: 12px;
 }
 
 .expense {
-  display: flex;
-  width: 90%;
-  height: auto;
-  margin: 2% 4%;
-  background-color: #2D4263;
   color: #fff;
-  border-radius: 5px;
-  padding: 1%;
-}
-
-.expense table {
-  width: 100%;
-}
-
-.expense td {
-  padding: 0.5%;
-}
-
-.expense th {
-  padding: 1%;
-  font-size: 18px;
-}
-
-.expense-form {
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  align-items: center;
-  width: 30%;
-  padding: 1% 0;
-  margin: 2% 35%;
-  background-color: #11468F;
-  color: #fff;
-}
-
-.expense-title {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.expense-title div {
-  width: 46%;
-  margin: 0 1%;
-}
-
-.expense-title div label {
-  margin: 0 2%;
-}
-
-.expense-values {
-  display: flex;
-  width: 90%;
-  justify-content: space-between;
+  padding: 12px;
+  border-radius: 8px;
+  width: 80%;
+  margin: 0 10%;
 }
 </style>

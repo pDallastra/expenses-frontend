@@ -8,10 +8,11 @@
           <th>Método</th>
         </thead>
         <tbody>
-          <table-item 
-          v-for="expense in expenses" 
-          :key="expense.id" 
-          :expense="expense"  
+          <table-item
+            class="table-item"
+            v-for="expense in expenses"
+            :key="expense.id"
+            :expense="expense"
           />
         </tbody>
         <button @click="$emit('setDisplayForm')">+</button>
@@ -30,4 +31,7 @@ export default {
 
 <style>
 
+th {
+  font-size: 20px;
+}
 </style>

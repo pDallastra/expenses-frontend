@@ -40,9 +40,7 @@
 
 <script>
 import dayjs from 'dayjs'
-
-import CategoriesService from "@/service/CategoriesService";
-import ExpensesService from "@/service/ExpensesService";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: 'Form',
@@ -53,7 +51,13 @@ export default {
       categories: [],
     }
   },
+
+  computed: {
+    ...mapGetters(['getCategories'])
+  },
   methods: {
+    ...mapActions(['initCategories']),
+
     formatDate(date, string) {
       return dayjs(date).format(string)
     },
@@ -68,16 +72,13 @@ export default {
       this.newExpense.amount = parseFloat(this.newExpense.amount)
       this.newExpense.reference_id = this.reference.id
       this.newExpense.user_id = '61faad3f234490dde088c094'
-      await ExpensesService.createExpense(this.newExpense)
       this.$emit('newExpense', this.newExpense)
       this.newExpense = {}
     },
   },
 
   async mounted() {
-    await CategoriesService.getCategoriesList().then((response) => {
-      this.categories = response
-    })
+    !this.getCategories.length && this.initCategories();
   }
 }
 </script>

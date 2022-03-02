@@ -1,45 +1,52 @@
 <template>
   <div id="app">
     <h1>Monthly Budget</h1>
-    <Expenses v-for="item in references" :key="item.id" :reference="item"/>
+    <Expenses v-for="item in getReferences" :key="item.id" :reference="item"/>
   </div>
 </template>
 
 <script>
   import Expenses from './components/Expenses.vue'
-  import ReferenceService from "@/service/ReferenceService";
+  import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: 'App',
   components: {
     Expenses
   },
-  data: () => ({
-    references: []
-  }),
+  computed: {
+    ...mapGetters(['getReferences']),
+  },
   methods: {
-    async getReferences() {
-      const references = await ReferenceService.getReferencesById()
-      this.references = references.references
-    }
+    ...mapActions(['initReferences']),
   },
   mounted() {
-    this.getReferences()
+    !this.getReferences.length && this.initReferences()
   }
 }
 </script>
 
 <style>
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: #fff;
+  background-color: #2c3e50;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 24px;
+  width: 100vw;
+  height: 100vh;
 }
 
 h1 {
-  margin: 0;
+  margin: 12px 0;
 }
 </style>
