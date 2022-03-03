@@ -37,7 +37,7 @@ export default new Vuex.Store({
   },
   actions: {
     async initReferences({ commit }, id = '61faad3f234490dde088c094') {
-      await axios.get(`${path}/references/${id}`).then(response => commit('initReferences', response.data));
+      await axios.get(`${path}/references/${id}`).then(response => commit('initReferences', response.data.references));
     },
 
     async initExpenses({ commit }, referenceId) {
@@ -49,7 +49,7 @@ export default new Vuex.Store({
     },
 
     async initBudgetTypes({ commit }) {
-      await axios.get(`${path}/categories`).then(response => commit('initBudgetTypes', response.data));
+      await axios.get(`${path}/budget`).then(response => commit('initBudgetTypes', response.data));
     },
 
     async createNewExpense({ commit }, newExpense) {
@@ -70,7 +70,7 @@ export default new Vuex.Store({
     },
 
     getExpenses(state) {
-      return this.state.expenses.length ?
+      return state.expenses.length ?
           state.expenses.sort((a, b) => new Date(a.date) - new Date(b.date)) :
           state.expenses;
     },

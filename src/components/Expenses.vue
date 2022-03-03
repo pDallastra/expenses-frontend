@@ -9,7 +9,7 @@
     
     <Table
       class="expense" 
-      v-show="expenses.length" 
+      v-show="getExpenses.length"
       :expenses="getExpenses"
       @setDisplayForm="setDisplayForm"
     />
@@ -42,15 +42,15 @@ export default {
   methods: {
     ...mapActions(['initExpenses', 'createNewExpense']),
     async checkNewExpense(newExpense) {
-      await this.createNewExpense(newExpense)
+      await this.createNewExpense(newExpense);
     },
 
     formatDate(date, string) {
-      return dayjs(date).format(string)
+      return dayjs(date).format(string);
     },
 
     setDisplayForm() {
-      this.displayForm = !this.displayForm
+      this.displayForm = !this.displayForm;
     },
   },
   mounted() {

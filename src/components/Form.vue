@@ -31,7 +31,7 @@
         </select>
         <label for="categories">Categoria</label>
         <select id="categories" v-model="newExpense.category_id">
-          <option v-for="category in categories" :key="category.id" value="category.id">{{ category.title }}</option>
+          <option v-for="category in getCategories" :key="category.id" value="category.id">{{ category.title }}</option>
         </select>
       </div>
       <button @click="checkNewExpense()">Submit</button>
@@ -56,7 +56,7 @@ export default {
     ...mapGetters(['getCategories'])
   },
   methods: {
-    ...mapActions(['initCategories']),
+    ...mapActions(['initCategories', 'createNewExpense']),
 
     formatDate(date, string) {
       return dayjs(date).format(string)
@@ -72,7 +72,7 @@ export default {
       this.newExpense.amount = parseFloat(this.newExpense.amount)
       this.newExpense.reference_id = this.reference.id
       this.newExpense.user_id = '61faad3f234490dde088c094'
-      this.$emit('newExpense', this.newExpense)
+      await this.createNewExpense(this.newExpense)
       this.newExpense = {}
     },
   },
