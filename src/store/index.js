@@ -54,8 +54,8 @@ export default new Vuex.Store({
 
     async createNewExpense({ commit }, newExpense) {
       try {
-        await axios.post(`${path}/expenses`, newExpense);
         commit('addNewExpense', newExpense);
+        await axios.post(`${path}/expenses`, newExpense);
       }
       catch (e) {
         console.log(e);
