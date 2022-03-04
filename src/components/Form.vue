@@ -1,88 +1,89 @@
 <template>
-      <form @submit.stop.prevent v-show="displayForm" class="expense-form">
-        <div class="title">Olá</div>
-        <div class="subtitle">Adicione a Dispesa</div>
-        <div class="input-container ic1">
-          <input 
-            id="title" 
-            class="input" 
-            type="text" 
-            placeholder=" " 
-            v-model="newExpense.title"
-          />
-          <div class="cut"></div>
-          <label for="title" class="placeholder">Título</label>
-        </div>
-        <div class="input-container ic2">
-          <input 
-            id="where" 
-            class="input" 
-            type="text" 
-            placeholder=" " 
-            v-model="newExpense.where"
-          />
-          <div class="cut"></div>
-          <label for="where" class="placeholder">Onde</label>
-        </div>
-        <div class="input-container ic1">
-          <input 
-            id="amount" 
-            class="input" 
-            type="number" 
-            placeholder=" " 
-            v-model="newExpense.amount"
-          />
-          <div class="cut cut-short"></div>
-          <label for="amount" class="placeholder">Quanto</label>
-        </div>
-        <div class="input-container ic2">
-          <input
-              id="date"
-              class="input"
-              type="date"
-              placeholder=" "
-              :min="formatDate(reference.month, 'YYYY-MM-DD')"
-              :max="getLastDayMonth(reference.month)"
-              v-model="newExpense.date"
-          />
-          <div class="cut"></div>
-          <label for="date" class="placeholder">Quando</label>
-        </div>
-        <div class="input-container ic1">
-          <select 
-            id="payment" 
-            class="input" 
-            type="number" 
-            placeholder=" " 
-            v-model="newExpense.payment"
-          >
-            <option value="Bank">Bank</option>
-            <option value="Credit">Credit</option>
-            <option value="Debit">Debit</option>
-          </select>
-          <div class="cut cut-short"></div>
-          <label for="payment" class="placeholder">Como</label>
-        </div>
-        <div class="input-container ic2">
-          <select 
-            id="categories" 
-            class="input" 
-            type="text" 
-            placeholder=" " 
-            v-model="newExpense.category_id"
-          >
-            <option 
-              v-for="category in getCategories" 
-              :key="category.id" 
-              value="category.id"
-            >{{ category.title }}
-            </option>
-          </select>
-          <div class="cut"></div>
-          <label for="categories" class="placeholder">Categoria</label>
-        </div>
-        <button type="text" class="submit" @click="checkNewExpense()">Enviar</button>
-    </form>
+  <form @submit.stop.prevent v-show="displayForm" class="expense-form">
+    <div class="close-form" @click="$emit('displayForm')">X</div>
+    <div class="title">Olá</div>
+    <div class="subtitle">Adicione a Dispesa</div>
+    <div class="input-container ic1">
+      <input
+        id="title"
+        class="input"
+        type="text"
+        placeholder=" "
+        v-model="newExpense.title"
+      />
+      <div class="cut"></div>
+      <label for="title" class="placeholder">Título</label>
+    </div>
+    <div class="input-container ic2">
+      <input
+        id="where"
+        class="input"
+        type="text"
+        placeholder=" "
+        v-model="newExpense.where"
+      />
+      <div class="cut"></div>
+      <label for="where" class="placeholder">Onde</label>
+    </div>
+    <div class="input-container ic1">
+      <input
+        id="amount"
+        class="input"
+        type="number"
+        placeholder=" "
+        v-model="newExpense.amount"
+      />
+      <div class="cut cut-short"></div>
+      <label for="amount" class="placeholder">Quanto</label>
+    </div>
+    <div class="input-container ic2">
+      <input
+          id="date"
+          class="input"
+          type="date"
+          placeholder=" "
+          :min="formatDate(reference.month, 'YYYY-MM-DD')"
+          :max="getLastDayMonth(reference.month)"
+          v-model="newExpense.date"
+      />
+      <div class="cut"></div>
+      <label for="date" class="placeholder">Quando</label>
+    </div>
+    <div class="input-container ic1">
+      <select
+        id="payment"
+        class="input"
+        type="number"
+        placeholder=" "
+        v-model="newExpense.payment"
+      >
+        <option value="Bank">Bank</option>
+        <option value="Credit">Credit</option>
+        <option value="Debit">Debit</option>
+      </select>
+      <div class="cut cut-short"></div>
+      <label for="payment" class="placeholder">Como</label>
+    </div>
+    <div class="input-container ic2">
+      <select
+        id="categories"
+        class="input"
+        type="text"
+        placeholder=" "
+        v-model="newExpense.category_id"
+      >
+        <option
+          v-for="category in getCategories"
+          :key="category.id"
+          value="category.id"
+        >{{ category.title }}
+        </option>
+      </select>
+      <div class="cut"></div>
+      <label for="categories" class="placeholder">Categoria</label>
+    </div>
+    <button type="text" class="submit" @click="checkNewExpense()">Enviar</button>
+  </form>
 </template>
 
 <script>
@@ -121,7 +122,7 @@ export default {
       this.newExpense.user_id = '61faad3f234490dde088c094';
       await this.createNewExpense(this.newExpense);
       this.newExpense = {};
-
+      this.$emit('displayForm');
     },
   },
 
@@ -132,13 +133,17 @@ export default {
 </script>
 
 <style>
+.close-form {
+  cursor: pointer;
+}
 .expense-form {
   background-color: #15172b;
   border-radius: 20px;
   box-sizing: border-box;
   height: auto;
   padding: 20px;
-  width: 320px;
+  width: 30%;
+  margin: 5% 35%;
 }
 .title {
   color: #eee;

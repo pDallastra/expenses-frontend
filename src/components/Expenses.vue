@@ -4,31 +4,32 @@
       :displayForm="displayForm" 
       :reference="reference" 
       @newExpense="checkNewExpense(newExpense)"
+      @displayForm="displayForm = !displayForm"
     />
 
     <div v-show="getExpenses.length" class="items-container">
       <div class="item-header">
         <button @click="displayForm = !displayForm">+</button>
         <h2> {{ formatDate(reference.month, 'MMM/YY') }}</h2>
-        <button @click="displayForm = !displayForm">Esconder</button>
+        <button @click="displayExpenses = !displayExpenses">{{ displayExpenses ? 'Esconder' : 'Mostrar'}}</button>
       </div>
-
-      <div class="item-titles">
-        <p class="w-10">Dia</p>
-        <p class="w-30">Título</p>
-        <p class="w-20">Onde</p>
-        <p class="w-25">Valor</p>
-        <p class="w-15">Método</p>
-      </div>
-      <div class="item-desc" v-for="expense in getExpenses" :key="expense.id">
-        <p class="w-10">{{ formatDate(expense.date, 'DD') }}</p>
-        <p class="w-30">{{ expense.title }}</p>
-        <p class="w-20">{{ expense.where }}</p>
-        <p class="w-25">{{ formatToCurrency(expense.amount) }}</p>
-        <p class="w-15">{{ expense.payment }}</p>
+      <div v-show="displayExpenses">
+        <div class="item-titles">
+          <p class="w-10">Dia</p>
+          <p class="w-30">Título</p>
+          <p class="w-20">Onde</p>
+          <p class="w-25">Valor</p>
+          <p class="w-15">Método</p>
+        </div>
+        <div class="item-desc" v-for="expense in getExpenses" :key="expense.id">
+          <p class="w-10">{{ formatDate(expense.date, 'DD') }}</p>
+          <p class="w-30">{{ expense.title }}</p>
+          <p class="w-20">{{ expense.where }}</p>
+          <p class="w-25">{{ formatToCurrency(expense.amount) }}</p>
+          <p class="w-15">{{ expense.payment }}</p>
+        </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -45,7 +46,8 @@ export default {
   },
   data() {
     return {
-      displayForm: false
+      displayForm: false,
+      displayExpenses: true,
     }
   },
 
