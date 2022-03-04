@@ -3,17 +3,35 @@
         <div class="title">Olá</div>
         <div class="subtitle">Adicione a Dispesa</div>
         <div class="input-container ic1">
-          <input id="title" class="input" type="text" placeholder=" " v-model="newExpense.title"/>
+          <input 
+            id="title" 
+            class="input" 
+            type="text" 
+            placeholder=" " 
+            v-model="newExpense.title"
+          />
           <div class="cut"></div>
           <label for="title" class="placeholder">Título</label>
         </div>
         <div class="input-container ic2">
-          <input id="where" class="input" type="text" placeholder=" " v-model="newExpense.where"/>
+          <input 
+            id="where" 
+            class="input" 
+            type="text" 
+            placeholder=" " 
+            v-model="newExpense.where"
+          />
           <div class="cut"></div>
           <label for="where" class="placeholder">Onde</label>
         </div>
         <div class="input-container ic1">
-          <input id="amount" class="input" type="number" placeholder=" " v-model="newExpense.amount"/>
+          <input 
+            id="amount" 
+            class="input" 
+            type="number" 
+            placeholder=" " 
+            v-model="newExpense.amount"
+          />
           <div class="cut cut-short"></div>
           <label for="amount" class="placeholder">Quanto</label>
         </div>
@@ -31,7 +49,13 @@
           <label for="date" class="placeholder">Quando</label>
         </div>
         <div class="input-container ic1">
-          <select id="payment" class="input" type="number" placeholder=" " v-model="newExpense.payment">
+          <select 
+            id="payment" 
+            class="input" 
+            type="number" 
+            placeholder=" " 
+            v-model="newExpense.payment"
+          >
             <option value="Bank">Bank</option>
             <option value="Credit">Credit</option>
             <option value="Debit">Debit</option>
@@ -40,8 +64,19 @@
           <label for="payment" class="placeholder">Como</label>
         </div>
         <div class="input-container ic2">
-          <select id="categories" class="input" type="text" placeholder=" " v-model="newExpense.category_id">
-            <option v-for="category in getCategories" :key="category.id" value="category.id">{{ category.title }}</option>
+          <select 
+            id="categories" 
+            class="input" 
+            type="text" 
+            placeholder=" " 
+            v-model="newExpense.category_id"
+          >
+            <option 
+              v-for="category in getCategories" 
+              :key="category.id" 
+              value="category.id"
+            >{{ category.title }}
+            </option>
           </select>
           <div class="cut"></div>
           <label for="categories" class="placeholder">Categoria</label>
@@ -213,11 +248,3 @@ export default {
   background-color: #06b;
 }
 </style>
-
-<!--
-    <div class="form">
-
-
-    </div>
-
--->
